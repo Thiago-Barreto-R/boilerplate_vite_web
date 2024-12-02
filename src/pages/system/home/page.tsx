@@ -62,7 +62,7 @@ export default function Home() {
           </span>
         </p>
       </section>
-      <div className="flex items-center gap-10 rounded-md border bg-stone-900 p-4">
+      <div className="flex items-center gap-10 rounded-md border p-4 dark:bg-stone-900">
         git clone git@github.com:Thiago-Barreto-R/boilerplate_vite_web.git
         <Button onClick={handleCopyLink}>
           <FaRegCopy />
