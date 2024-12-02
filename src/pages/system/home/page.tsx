@@ -3,21 +3,23 @@ import LayoutMain from "../layout";
 import { Link } from "react-router-dom";
 import { ModeToggle } from "@/components/mode-toggle";
 import { toast } from "sonner";
+import { FaRegCopy } from "react-icons/fa6";
 
 export default function Home() {
   const user = localStorage.getItem("client");
-  const gitCloneLink = "https://github.com/your-repo-url.git";
+  const gitCloneLink =
+    "git clone git@github.com:Thiago-Barreto-R/boilerplate_vite_web.git";
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(gitCloneLink);
-      toast.success("Git clone link copied to clipboard!");
+      toast.success("Copied to clipboard!");
     } catch (err) {
       console.error("Failed to copy: ", err);
     }
   };
   return (
     <LayoutMain>
-      <header className="absolute left-0 top-0 flex w-full items-center justify-around p-4">
+      <header className="absolute left-0 top-0 flex w-full items-center justify-around border-b p-4">
         <Link to={"/"}>Logo</Link>
         <ul className="flex items-center gap-10">
           <li>
@@ -55,13 +57,19 @@ export default function Home() {
             Hello <h1>{user},</h1>
           </span>
           <span>
-            It’s great to have you here! You’ve just entered my Vite +
-            TypeScript + shadcn/Ui project. Explore, enjoy, and discover all
-            that this boilerplate has to offer for web development.
+            Welcome to the boilerplate project with Vite + TS + Shadcn/UI for
+            your web development.
           </span>
         </p>
       </section>
-      <Button onClick={handleCopyLink}>Copy Git Clone Link</Button>
+      <div className="flex items-center gap-10 rounded-md border bg-stone-900 p-4">
+        git clone git@github.com:Thiago-Barreto-R/boilerplate_vite_web.git
+        <Button onClick={handleCopyLink}>
+          <FaRegCopy />
+        </Button>
+      </div>
+      <p>Don't forget to mark the star and follow.</p>
+      <p className="text-xs italic text-stone-500">The future is bright.</p>
     </LayoutMain>
   );
 }
