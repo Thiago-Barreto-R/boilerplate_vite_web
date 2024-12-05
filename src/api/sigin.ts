@@ -1,31 +1,26 @@
 import { SigInData } from "@/interfaces/sigin";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 async function signIn({ username, password }: SigInData) {
   if (username && password) {
-    const response = { success: true };
-
-    if (response.success) {
-      toast.success("Bem-vindo");
-
-      localStorage.setItem("client", username);
-      return response;
-    } else {
-      toast.error("Erro ao fazer login.");
-    }
-  } else {
-    toast.info("Preencha os campos, pfvr.");
+    const response = { success: true, username };
+    return response;
   }
 }
 
 export function useSignIn() {
-  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const mutation = useMutation({
     mutationFn: signIn,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["user"]);
+    onSuccess: (result) => {
+      if (result?.success) {
+        toast.success(`Bem-vindo ${result.username}`);
+        localStorage.setItem("client", result.username);
+        navigate("/system/home");
+      }
+      console.log(result);
     },
     onError: (error) => {
       toast.error(`Erro: ${error.message}`);

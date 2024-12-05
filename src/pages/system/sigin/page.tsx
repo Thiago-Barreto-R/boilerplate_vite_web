@@ -15,7 +15,6 @@ import { SigInSchema } from "@/schemas/sigin";
 import { useSignIn } from "@/api/sigin";
 import { SigInData } from "@/interfaces/sigin";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 
 type SiginType = z.infer<typeof SigInSchema>;
 
@@ -25,13 +24,11 @@ export default function SigIn() {
   });
 
   const { register, handleSubmit } = methods;
-  const navigate = useNavigate();
 
   const { mutateAsync, isPending } = useSignIn();
 
   const handleInsert = async ({ username, password }: SigInData) => {
     const data = { username, password };
-    navigate("/system/home");
     await mutateAsync(data);
   };
 
@@ -64,7 +61,7 @@ export default function SigIn() {
                   {...register("password")}
                 />
               </div>
-              <Button>Access</Button>
+              <Button>{isPending ? "Loading" : "Access"}</Button>
             </form>
           </FormProvider>
         </CardContent>
